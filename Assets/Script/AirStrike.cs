@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class AirStrike : MonoBehaviour
@@ -12,7 +11,6 @@ public class AirStrike : MonoBehaviour
     private AudioSource audioSource; // AudioSource untuk memutar audio
     public GameObject effectDestroy; // Effect yang akan ditampilkan saat objek dihancurkan
 
-
     void Start()
     {
         // Mendapatkan komponen AudioSource
@@ -20,9 +18,6 @@ public class AirStrike : MonoBehaviour
 
         // Mulai Coroutine untuk secara otomatis instantiate object
         StartCoroutine(SpawnObjects());
-
-
-       // effectDestroy.SetActive(false);
     }
 
     IEnumerator SpawnObjects()
@@ -30,18 +25,17 @@ public class AirStrike : MonoBehaviour
         while (true)
         {
             // Instantiate prefab di posisi awal (sesuaikan dengan keinginan)
-            GameObject spawnedObject = Instantiate(objectPrefab, new Vector3(13.82f, -9.35f, 0), Quaternion.identity);
+            GameObject spawnedObject = Instantiate(objectPrefab, new Vector3(20.57f, -10f, 0), Quaternion.identity);
 
             // Set rotasi pada spawnedObject (X = 180, Z = -135)
-            spawnedObject.transform.rotation = Quaternion.Euler(180f, 0f, -135f);
+            spawnedObject.transform.rotation = Quaternion.Euler(180f, 0f, -135);
 
-            // Tambahkan komponen Collider jika belum ada, dan set sebagai Trigger
+            // Tambahkan komponen Collider jika belum ada
             Collider collider = spawnedObject.GetComponent<Collider>();
             if (collider == null)
             {
                 collider = spawnedObject.AddComponent<BoxCollider>(); // Menambahkan Collider jika tidak ada
             }
-            collider.isTrigger = true; // Atur Collider sebagai trigger
 
             // Tambahkan script DestroyOnPlayerTrigger ke object yang baru di-instantiate
             var destroyOnPlayerTrigger = spawnedObject.AddComponent<DestroyOnPlayerTrigger>();
@@ -62,7 +56,7 @@ public class AirStrike : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval);
         }
     }
-    
+
     void PlaySpawnAudio()
     {
         if (spawnAudioClip != null)
@@ -94,22 +88,21 @@ public class AirStrike : MonoBehaviour
     }
 }
 
-// Script untuk menghancurkan object ketika bertabrakan dengan Player menggunakan Trigger
+// Script untuk menghancurkan object ketika bertabrakan dengan Player menggunakan Collision
 public class DestroyOnPlayerTrigger : MonoBehaviour
 {
     public AudioSource airStrikeAudioSource; // AudioSource dari AirStrike
     public GameObject effectDestroy; // Effect prefab yang akan di-instantiate saat objek dihancurkan
     public AudioClip explosionAudioClip; // Audio clip untuk suara ledakan
-  
 
-    // Fungsi ini dipanggil saat object bertemu dengan trigger lain
-    private void OnTriggerEnter(Collider other)
+    // Fungsi ini dipanggil saat object bertabrakan dengan objek lain
+    private void OnCollisionEnter(Collision collision)
     {
-        // Debug log untuk memeriksa objek yang bersentuhan
-        Debug.Log($"Bersentuhan dengan: {other.gameObject.name}");
+        // Debug log untuk memeriksa objek yang bertabrakan
+        Debug.Log($"Bertabrakan dengan: {collision.gameObject.name}");
 
-        // Cek apakah object yang bersentuhan memiliki tag "Player"
-        if (other.CompareTag("Player"))
+        // Cek apakah object yang bertabrakan memiliki tag "Player"
+        if (collision.gameObject.CompareTag("Player"))
         {
             // Stop the audio if it is playing
             if (airStrikeAudioSource != null && airStrikeAudioSource.isPlaying)
@@ -120,7 +113,7 @@ public class DestroyOnPlayerTrigger : MonoBehaviour
             // Instantiate the destruction effect at the player's position
             if (effectDestroy != null)
             {
-                Instantiate(effectDestroy, other.transform.position, Quaternion.identity); // Instantiate effect at player's position
+                Instantiate(effectDestroy, collision.transform.position, Quaternion.identity); // Instantiate effect at player's position
             }
 
             // Play the explosion audio clip
@@ -129,13 +122,9 @@ public class DestroyOnPlayerTrigger : MonoBehaviour
                 airStrikeAudioSource.PlayOneShot(explosionAudioClip); // Play explosion sound
             }
 
-            
-
             // Hancurkan object ini
             Destroy(gameObject);
-            Debug.Log("Object dihancurkan setelah bertemu dengan Player!");
+            Debug.Log("Object dihancurkan setelah bertabrakan dengan Player!");
         }
     }
 }
-
-

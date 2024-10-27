@@ -451,7 +451,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -299.9558, y: 0, z: -303.92847, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -568,7 +568,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 17.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 543450653210450573}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &670878450
@@ -1903,7 +1904,7 @@ Transform:
   m_GameObject: {fileID: 919132149542567991}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0017843, y: 0.00000012981, z: 15.181}
+  m_LocalPosition: {x: -0.0017843, y: 0, z: -2.519001}
   m_LocalScale: {x: 0.45553, y: 0.45553, z: 0.45553}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1913,7 +1914,7 @@ Transform:
   - {fileID: 5569827872997417419}
   - {fileID: 111788555162008335}
   - {fileID: 6435951786856294345}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 529799675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &919132149542567991
 GameObject:
@@ -1948,7 +1949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd12db5b9bd379f409336f098aa9e681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 50
 --- !u!54 &919132149542567993
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2570,7 +2571,6 @@ SceneRoots:
   - {fileID: 1904610129}
   - {fileID: 1773576255}
   - {fileID: 529799675}
-  - {fileID: 543450653210450573}
   - {fileID: 670878454}
   - {fileID: 223855166}
   - {fileID: 2024026424}

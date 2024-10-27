@@ -5,6 +5,7 @@ using UnityEngine;
 public class DroneMovement : MonoBehaviour
 {
     [SerializeField] public float moveSpeed;
+    private Rigidbody rb;
     Animator droneAnim;
     //[SerializeField] public float verticalSpeed;
     //[SerializeField] public float horizontalSpeed;
@@ -12,7 +13,7 @@ public class DroneMovement : MonoBehaviour
 
     private void Awake()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
     void Start()
     {
@@ -23,43 +24,27 @@ public class DroneMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool isMoving = false;
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.W))
+        Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0f);
+        rb.MovePosition(transform.position + movement * moveSpeed * Time.deltaTime);
+
+        bool isMoving = movement != Vector3.zero;
+
+        if (moveHorizontal < 0) // A / Left
         {
-            transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
-            isMoving = true;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
-            isMoving = true;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
-            isMoving = true;
-
             droneAnim.SetBool("Kiri", true);
             droneAnim.SetBool("Idle", false);
             droneAnim.SetBool("Kanan", false);
-            
-            
         }
-
-        if(Input.GetKey(KeyCode.D))
+        else if (moveHorizontal > 0) // D / Right
         {
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-            isMoving = true;
-
             droneAnim.SetBool("Kiri", false);
             droneAnim.SetBool("Idle", false);
             droneAnim.SetBool("Kanan", true);
         }
-
-        if (!isMoving)
+        else if (!isMoving)
         {
             droneAnim.SetBool("Kiri", false);
             droneAnim.SetBool("Idle", true);

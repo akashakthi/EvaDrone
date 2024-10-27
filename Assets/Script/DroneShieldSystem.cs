@@ -13,7 +13,7 @@ public class DroneShieldSystem : MonoBehaviour
     void Start()
     {
         currentShields = maxShield;
-        UpdateShieoldVisuals();
+        UpdateShieldVisuals();
     }
 
     // Update is called once per frame
@@ -22,18 +22,20 @@ public class DroneShieldSystem : MonoBehaviour
         
     }
 
-    void UpdateShieoldVisuals()
+    void UpdateShieldVisuals()
     {
         for (int i = 0; i < shieldObjects.Length; i++)
         {
-            if (i < currentShields)
-            {
-                shieldObjects[i].SetActive(true);
-            }
-            else
-            {
-                shieldObjects[i].SetActive(false);
-            }
+            //if (i < currentShields)
+            //{
+            //shieldObjects[i].SetActive(true);
+            //}
+            //else
+            //{
+            //shieldObjects[i].SetActive(false);
+            //}
+
+            shieldObjects[i].SetActive(i<currentShields);
         }
     }
 
@@ -44,12 +46,18 @@ public class DroneShieldSystem : MonoBehaviour
             if (currentShields > 0)
             {
                 currentShields--;
-                UpdateShieoldVisuals();
+                UpdateShieldVisuals();
             }
             else
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
+    }
+
+    public void ResetShield()
+    {
+        currentShields = maxShield;
+        UpdateShieldVisuals();
     }
 }

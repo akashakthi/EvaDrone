@@ -980,8 +980,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050dca831beabb947bb619f0cc023a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 350779201}
   playerDrone: {fileID: 1454166946}
+  loseUI: {fileID: 0}
+  scoreText: {fileID: 350779201}
+  highScoreText: {fileID: 0}
 --- !u!4 &752872521
 Transform:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletRain : MonoBehaviour
+public class PesawatJett : MonoBehaviour
 {
     public GameObject objectPrefab; // Prefab dari GameObject untuk di-instantiate
     public GameObject[] targetObjects; // Array dari GameObject sebagai titik tujuan
@@ -10,7 +10,7 @@ public class BulletRain : MonoBehaviour
     public AudioClip spawnAudioClip; // Audio clip yang akan diputar saat spawn
     private AudioSource audioSource; // AudioSource untuk memutar audio
     public GameObject effectDestroy; // Effect yang akan ditampilkan saat objek dihancurkan
-    public GameObject spawnPoint; // Reference to the spawn point GameObject
+
     void Start()
     {
         // Mendapatkan komponen AudioSource
@@ -24,34 +24,34 @@ public class BulletRain : MonoBehaviour
     {
         while (true)
         {
-            // Instantiate prefab at the spawnPoint's position
-            GameObject spawnedObject = Instantiate(objectPrefab, spawnPoint.transform.position, Quaternion.identity);
+            // Instantiate prefab di posisi awal (sesuaikan dengan keinginan)
+            GameObject spawnedObject = Instantiate(objectPrefab, new Vector3(20.57f, -10f, 0), Quaternion.identity);
 
-            // Set rotation on spawnedObject (X = 0, Y = 0, Z = 45)
-            spawnedObject.transform.rotation = Quaternion.Euler(0f, 0f, 45);
+            // Set rotasi pada spawnedObject (X = 180, Z = -135)
+            spawnedObject.transform.rotation = Quaternion.Euler(180f, 0f, -135);
 
-            // Add a Collider component if it doesn't exist and set it as a trigger
+            // Tambahkan komponen Collider jika belum ada
             Collider collider = spawnedObject.GetComponent<Collider>();
             if (collider == null)
             {
-                collider = spawnedObject.AddComponent<BoxCollider>(); // Add Collider if none exists
+                collider = spawnedObject.AddComponent<BoxCollider>(); // Menambahkan Collider jika tidak ada
             }
 
-            // Add DestroyOnPlayerTrigger script to the newly instantiated object
+            // Tambahkan script DestroyOnPlayerTrigger ke object yang baru di-instantiate
             var destroyOnPlayerTrigger = spawnedObject.AddComponent<DestroyOnPlayerTrigger>();
-            destroyOnPlayerTrigger.airStrikeAudioSource = audioSource; // Pass AudioSource to DestroyOnPlayerTrigger
-            destroyOnPlayerTrigger.effectDestroy = effectDestroy; // Pass effectDestroy to DestroyOnPlayerTrigger
+            destroyOnPlayerTrigger.airStrikeAudioSource = audioSource; // Kirim AudioSource ke DestroyOnPlayerTrigger
+            destroyOnPlayerTrigger.effectDestroy = effectDestroy; // Kirim effectDestroy ke DestroyOnPlayerTrigger
 
-            // Choose a random target from the targetObjects array
+            // Pilih target secara acak dari array targetObjects
             GameObject randomTarget = targetObjects[Random.Range(0, targetObjects.Length)];
 
-            // Move the newly instantiated object towards the chosen target
+            // Pindahkan object yang baru di-instantiate ke target yang dipilih
             StartCoroutine(MoveToTarget(spawnedObject, randomTarget));
 
-            // Play audio when the object is spawned
+            // Panggil audio saat objek di-spawn
             PlaySpawnAudio();
 
-            // Wait 4 to 6 seconds before instantiating another object
+            // Tunggu 4 hingga 6 detik sebelum instantiate object lagi
             float spawnInterval = Random.Range(4f, 6f);
             yield return new WaitForSeconds(spawnInterval);
         }
@@ -89,7 +89,7 @@ public class BulletRain : MonoBehaviour
 }
 
 // Script untuk menghancurkan object ketika bertabrakan dengan Player menggunakan Collision
-public class DestroyOnPlayersTriggerBullet : MonoBehaviour
+public class DestroyOnPlayersTriggerJett : MonoBehaviour
 {
     public AudioSource bulletAudioSource; // AudioSource dari BulletRain
     public GameObject effectBulletDestroy; // Effect prefab yang akan di-instantiate saat objek dihancurkan

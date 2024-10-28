@@ -8,9 +8,9 @@ public class AirStrike : MonoBehaviour
     public GameObject[] targetObjects; // Array dari GameObject sebagai titik tujuan
     public float speed = 5f; // Kecepatan bergerak
     public AudioClip spawnAudioClip; // Audio clip yang akan diputar saat spawn
-    private AudioSource audioSource; // AudioSource untuk memutar audio
+    public AudioSource audioSource; // AudioSource untuk memutar audio
     public GameObject effectDestroy; // Effect yang akan ditampilkan saat objek dihancurkan
-
+    public GameObject spawnPoint;
     void Start()
     {
         // Mendapatkan komponen AudioSource
@@ -25,10 +25,10 @@ public class AirStrike : MonoBehaviour
         while (true)
         {
             // Instantiate prefab di posisi awal (sesuaikan dengan keinginan)
-            GameObject spawnedObject = Instantiate(objectPrefab, new Vector3(20.57f, -10f, 0), Quaternion.identity);
+            GameObject spawnedObject = Instantiate(objectPrefab, spawnPoint.transform.position, Quaternion.identity);
 
             // Set rotasi pada spawnedObject (X = 180, Z = -135)
-            spawnedObject.transform.rotation = Quaternion.Euler(180f, 0f, -135);
+            spawnedObject.transform.rotation = Quaternion.Euler(-45f, -90f, 0);
 
             // Tambahkan komponen Collider jika belum ada
             Collider collider = spawnedObject.GetComponent<Collider>();
